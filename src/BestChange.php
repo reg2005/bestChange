@@ -17,9 +17,9 @@ class BestChange
     const FILE_EXCHANGERS = 'bm_exch.dat';
     const FILE_RATES = 'bm_rates.dat';
 
-    const TIMEOUT = 5;
-
     private $tmpName;
+
+    private $timeout = 5;
     /**
      * @var \ZipArchive
      */
@@ -98,6 +98,11 @@ class BestChange
     public function getRatesFilter($currencyGiveID = 0, $currencyReceiveID = 0)
     {
         return $this->rates->filter($currencyGiveID, $currencyReceiveID);
+    }
+
+    public function setTimeout($timeout)
+    {
+        $this->timeout = $timeout;
     }
 
     /**
@@ -199,7 +204,7 @@ class BestChange
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_TIMEOUT, self::TIMEOUT);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
         curl_setopt($ch, CURLOPT_AUTOREFERER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
