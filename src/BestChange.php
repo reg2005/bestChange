@@ -40,9 +40,10 @@ class BestChange
     private $useCache;
     private $cacheTime;
 
-    public function __construct($cachePath = '', $cacheTime = 3600)
+    public function __construct($cachePath = '', $cacheTime = 3600, $timeout = 5)
     {
         $this->zip = new \ZipArchive();
+        $this->timeout = $timeout;
         if ($cachePath) {
             $this->cacheTime = $cacheTime;
             $this->useCache = true;
@@ -98,11 +99,6 @@ class BestChange
     public function getRatesFilter($currencyGiveID = 0, $currencyReceiveID = 0)
     {
         return $this->rates->filter($currencyGiveID, $currencyReceiveID);
-    }
-
-    public function setTimeout($timeout)
-    {
-        $this->timeout = $timeout;
     }
 
     /**
